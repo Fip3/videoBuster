@@ -1,0 +1,40 @@
+10
+
+dir
+15
+http://pvd-am-01-07.aws.smartcloud.cl/project01/VideoBuster/src
+http://pvd-am-01-07.aws.smartcloud.cl/project01
+
+
+
+2017-12-18T16:13:50.172019Z
+15
+usuario01
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+9a3999dd-8090-e64b-8169-c87f94145244
+
+basedatos
+dir
+
+controlador
+dir
+
+modelo
+dir
+
+vista
+dir
+

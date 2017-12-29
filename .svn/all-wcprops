@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/project01/!svn/ver/15/VideoBuster
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/project01/!svn/ver/12/VideoBuster/build.xml
+END
+manifest.mf
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/project01/!svn/ver/12/VideoBuster/manifest.mf
+END
+ojdbc7.jar
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/project01/!svn/ver/13/VideoBuster/ojdbc7.jar
+END

@@ -1,0 +1,54 @@
+10
+
+dir
+15
+http://pvd-am-01-07.aws.smartcloud.cl/project01/VideoBuster/src/vista
+http://pvd-am-01-07.aws.smartcloud.cl/project01
+
+
+
+2017-12-18T16:13:50.172019Z
+15
+usuario01
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+9a3999dd-8090-e64b-8169-c87f94145244
+
+Ventana.form
+file
+
+
+
+
+
+0579676b5a6243ae1303a3933cd1bf32
+2017-12-18T16:13:50.172019Z
+15
+usuario01
+has-props
+
+Ventana.java
+file
+
+
+
+
+
+0ca07bedbc1be84e5f18abe1a3fa9a7d
+2017-12-18T16:13:50.172019Z
+15
+usuario01
+has-props
+

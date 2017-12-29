@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/project01/!svn/ver/12/VideoBuster/src/controlador
+END
+ExcepcionNombreNoValido.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/project01/!svn/ver/12/VideoBuster/src/controlador/ExcepcionNombreNoValido.java
+END
+ExcepcionCodigoNoValido.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/project01/!svn/ver/12/VideoBuster/src/controlador/ExcepcionCodigoNoValido.java
+END
+ExcepcionPrecioNoValido.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/project01/!svn/ver/12/VideoBuster/src/controlador/ExcepcionPrecioNoValido.java
+END
+ExcepcionCodigoExistente.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/project01/!svn/ver/12/VideoBuster/src/controlador/ExcepcionCodigoExistente.java
+END
+ExcepcionPeliculaNoExiste.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/project01/!svn/ver/12/VideoBuster/src/controlador/ExcepcionPeliculaNoExiste.java
+END
+Registro.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/project01/!svn/ver/12/VideoBuster/src/controlador/Registro.java
+END
