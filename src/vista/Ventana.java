@@ -6,11 +6,7 @@ package vista;
  * and open the template in the editor.
  */
 
-import controlador.exceptions.ExcepcionCodigoExistente;
-import controlador.exceptions.ExcepcionCodigoNoValido;
-import controlador.exceptions.ExcepcionPrecioNoValido;
-import controlador.exceptions.ExcepcionPeliculaNoExiste;
-import controlador.exceptions.ExcepcionNombreNoValido;
+import controlador.exceptions.*;
 import controlador.*;
 import oracle.jdbc.OracleDriver;
 import java.sql.*;
@@ -32,6 +28,7 @@ public class Ventana extends javax.swing.JFrame {
         initComponents();
         initCategoria();
         mostrarListado();
+        listarCategoria();
     }
     
     public void mostrarListado(){
@@ -59,6 +56,26 @@ public class Ventana extends javax.swing.JFrame {
         
         jTabla.setModel(modelo);
     }
+    
+    public void listarCategoria(){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("DESCRIPCION");
+        jTablaCat.setModel(modelo);
+        
+        ArrayList<Categoria> listado;
+        listado = Registro.listarCategoriaId();
+        String[] entrada = new String[2];
+        
+        for(Categoria cat : listado) {
+            entrada[0] = String.valueOf(cat.getId());
+            entrada[1] = cat.getDescripcion();
+            
+            modelo.addRow(entrada);
+        }
+        
+        jTablaCat.setModel(modelo);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,6 +86,8 @@ public class Ventana extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jEliminarCat = new javax.swing.JMenuItem();
         jPanelIngreso = new javax.swing.JTabbedPane();
         jIngresar = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -99,6 +118,16 @@ public class Ventana extends javax.swing.JFrame {
         jTexto = new javax.swing.JTextField();
         jAyuda = new javax.swing.JButton();
         jLimpiar = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablaCat = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        jDescripcion = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jId = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jAgregarCategoria = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
         jListar = new javax.swing.JPanel();
         jCategoriaL = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -108,12 +137,22 @@ public class Ventana extends javax.swing.JFrame {
         jCodigoE = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jListarPeliculas = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jTextoBuscar = new javax.swing.JTextField();
+        jBuscarNombre = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenu = new javax.swing.JMenuBar();
         jOpciones = new javax.swing.JMenu();
         jSalir = new javax.swing.JMenuItem();
+
+        jEliminarCat.setText("Eliminar");
+        jEliminarCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarCatActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jEliminarCat);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -178,7 +217,7 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(96, 96, 96)
                 .addComponent(jAgregar)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,6 +276,8 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        jCategoriaM.setEditable(true);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -247,7 +288,7 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jCodigoM, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBuscar))
@@ -315,6 +356,82 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jScrollPane2.setComponentPopupMenu(jPopupMenu1);
+
+        jTablaCat.setModel(new javax.swing.table.DefaultTableModel(
+
+        ));
+        jTablaCat.setComponentPopupMenu(jPopupMenu1);
+        jScrollPane2.setViewportView(jTablaCat);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel12.setText("AGREGAR CATEGORIA");
+
+        jLabel16.setText("ID");
+
+        jLabel18.setText("DESCRIPCION");
+
+        jAgregarCategoria.setText("Agregar Categoria");
+        jAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAgregarCategoriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jId, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(39, 39, 39)
+                                        .addComponent(jAgregarCategoria))
+                                    .addComponent(jDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jAgregarCategoria)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel16)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(jDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 34, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jIngresarLayout = new javax.swing.GroupLayout(jIngresar);
         jIngresar.setLayout(jIngresarLayout);
         jIngresarLayout.setHorizontalGroup(
@@ -323,19 +440,27 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jIngresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIngresarLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jIngresarLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jIngresarLayout.createSequentialGroup()
-                        .addComponent(jTexto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jAyuda)))
-                .addGap(11, 11, 11))
+                        .addGroup(jIngresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jIngresarLayout.createSequentialGroup()
+                                .addComponent(jTexto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLimpiar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jAyuda))
+                            .addGroup(jIngresarLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jIngresarLayout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jIngresarLayout.createSequentialGroup()
+                        .addComponent(jSeparator2)
+                        .addContainerGap())))
         );
         jIngresarLayout.setVerticalGroup(
             jIngresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,10 +478,14 @@ public class Ventana extends javax.swing.JFrame {
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanelIngreso.addTab("Ingresar", jIngresar);
+        jPanelIngreso.addTab("Registro", jIngresar);
 
         jCategoriaL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,14 +507,22 @@ public class Ventana extends javax.swing.JFrame {
         jTabla.setModel(new javax.swing.table.DefaultTableModel());
         jScrollPane1.setViewportView(jTabla);
 
-        jLabel5.setText("Codigo");
+        jLabel5.setText("Codigo Pelicula");
 
-        jLabel9.setText("Elegir Categoría:");
+        jLabel9.setText("Buscar por Categoría:");
 
-        jListarPeliculas.setText("Listar");
-        jListarPeliculas.addActionListener(new java.awt.event.ActionListener() {
+        jLabel11.setText("Buscar por Nombre:");
+
+        jTextoBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jListarPeliculasActionPerformed(evt);
+                jTextoBuscarActionPerformed(evt);
+            }
+        });
+
+        jBuscarNombre.setText("Buscar");
+        jBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBuscarNombreActionPerformed(evt);
             }
         });
 
@@ -398,27 +535,31 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(jListarLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
                             .addGroup(jListarLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jListarLayout.createSequentialGroup()
                         .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jListarLayout.createSequentialGroup()
-                                .addGap(185, 185, 185)
-                                .addComponent(jLabel5)
+                                .addGap(160, 160, 160)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCodigoE, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jEliminar))
                             .addGroup(jListarLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCategoriaL, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(73, 73, 73)
-                                .addComponent(jListarPeliculas)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))
+                                .addGap(26, 26, 26)
+                                .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextoBuscar)
+                                    .addComponent(jCategoriaL, 0, 288, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jBuscarNombre)))
+                        .addGap(0, 175, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jListarLayout.setVerticalGroup(
@@ -427,13 +568,16 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addGap(11, 11, 11)
-                .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCategoriaL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9))
-                    .addComponent(jListarPeliculas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCategoriaL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jTextoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBuscarNombre))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jEliminar)
@@ -442,7 +586,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanelIngreso.addTab("Listar", jListar);
+        jPanelIngreso.addTab("Búsqueda", jListar);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
@@ -487,8 +631,8 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addComponent(jPanelIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(jPanelIngreso)
+                .addContainerGap())
         );
 
         pack();
@@ -524,246 +668,52 @@ public class Ventana extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jSalirActionPerformed
 
-    private void jFormatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormatoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormatoActionPerformed
+    private void jPanelIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelIngresoMouseClicked
 
-    private void jModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModificarActionPerformed
-        try {
-            
-            if(!Registro.peliculaExiste(Integer.parseInt(jCodigoM.getText().trim()))){
-                throw new ExcepcionPeliculaNoExiste();
-            }
-            
-            if(Integer.parseInt(jCodigoM.getText().trim()) < 10000 || Integer.parseInt(jCodigoM.getText().trim()) >= 100000 ){
-                throw new ExcepcionCodigoNoValido();
-            }
-            
-            if(jCodigoM.getText().equals("") || jNombreM.getText().equals("") || jPrecioM.getText().equals("") ){
-                throw new NullPointerException();
-            }
-            
-            if(jNombreM.getText().trim().length() < 3){
-                throw new ExcepcionNombreNoValido();
-            }
-            
-            if(Integer.parseInt(jPrecioM.getText().trim()) <= 1000){
-                throw new ExcepcionPrecioNoValido();
-            }
-            
-            Pelicula p = new Pelicula();
-            
-            Object catcb = jCategoriaM.getSelectedItem();
-            
-            p.setCodigo(Integer.parseInt(jCodigoM.getText().trim()));
-            p.setPrecio(Integer.parseInt(jPrecioM.getText().trim()));
-            p.setIdCategoria(Registro.buscarCategoria(catcb.toString()).getId());
-            p.setNombre(jNombreM.getText().trim());
-            if (jFormatoM.isSelected()){
-                p.setFormato4k("S");
-            } else {
-                p.setFormato4k("N");
-            }
-        
-            if(Registro.modificarPelicula(p)){
-                JOptionPane.showMessageDialog(this, "Registro modificado con exito");
-                jTexto.setText("Registro modificado exitosamente");
-                mostrarListado();
-            } else {
-                JOptionPane.showMessageDialog(this, "Registro no se ha modificado");
-                jTexto.setText("Registro no se modificó");
-            }
-            
-        } catch (ExcepcionPeliculaNoExiste epnx){
-            JOptionPane.showMessageDialog(this, "Pelicula no está registrada");
-        } catch (NullPointerException ne){
-            JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
-            System.out.println("Error de campos vacios -- " + ne.getMessage());
-        } catch (ExcepcionNombreNoValido en){
-            JOptionPane.showMessageDialog(this, "El nombre debe tener 3 caracteres como minimo ");
-            System.out.println("Error de largo de nombre -- " + en.getMessage());
-        } catch (ExcepcionPrecioNoValido ep){
-            JOptionPane.showMessageDialog(this, "El precio debe ser mayor a $1000");
-            System.out.println("Error de rango de precio -- " + ep.getMessage());
-        } catch (ExcepcionCodigoNoValido ec){
-            JOptionPane.showMessageDialog(this, "El codigo debe poseer 5 digitos");
-            System.out.println("Error de codigo no valido -- " + ec.getMessage());
-        } catch (NumberFormatException nfe){
-            JOptionPane.showMessageDialog(this, "Precio y Codigo deben ser numéricos");
-            System.out.println("Error de caracter no valido -- " + nfe.getMessage());
-        }
-    }//GEN-LAST:event_jModificarActionPerformed
-
-    private void jFormatoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormatoMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormatoMActionPerformed
-
-    private void jAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarActionPerformed
-        try {
-            
-            if(jCodigo.getText().equals("") || jNombre.getText().equals("") || jPrecio.getText().equals("") ){
-                throw new NullPointerException();
-            }
-            
-            if(!Registro.peliculaExiste(Integer.parseInt(jCodigo.getText().trim()))){
-                throw new ExcepcionCodigoExistente();
-            }
-            
-            if(Integer.parseInt(jCodigo.getText().trim()) < 10000 || Integer.parseInt(jCodigo.getText().trim()) >= 100000 ){
-                throw new ExcepcionCodigoNoValido();
-            }
-            
-            if(jNombre.getText().trim().length() < 3){
-                throw new ExcepcionNombreNoValido();
-            }
-            
-            if(Integer.parseInt(jPrecio.getText().trim()) <= 1000){
-                throw new ExcepcionPrecioNoValido();
-            }
-            
-            Pelicula p = new Pelicula();
-            
-            Object catcb = jCategoria.getSelectedItem();
-            
-            p.setCodigo(Integer.parseInt(jCodigo.getText().trim()));
-            p.setPrecio(Integer.parseInt(jPrecio.getText().trim()));
-            p.setIdCategoria(Registro.buscarCategoria(catcb.toString()).getId());
-            p.setNombre(jNombre.getText().trim());
-            if (jFormato.isSelected()){
-                p.setFormato4k("S");
-            } else {
-                p.setFormato4k("N");
-            }
-        
-            if(Registro.agregarPelicula(p)){
-                JOptionPane.showMessageDialog(this, "Registro ingresado con exito");
-                jTexto.setText("Registro ingresado exitosamente");
-                mostrarListado();
-            } else {
-                JOptionPane.showMessageDialog(this, "Registro no ingresado");
-                jTexto.setText("Error al ingresar registro");
-            }
-            
-        } catch (NullPointerException ne){
-            JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
-            System.out.println("Error de campos vacios -- " + ne.getMessage());
-        } catch(ExcepcionCodigoExistente ex){
-            JOptionPane.showMessageDialog(this, "Ya existe una película asociada al código.");
-            System.out.println("Error de campos vacios -- " + ex.getMessage());
-        } catch (ExcepcionCodigoNoValido ec){
-            JOptionPane.showMessageDialog(this, "El codigo debe:\n - poseer 5 digitos.\n - no comenzar con 0 (cero)");
-            System.out.println("Error de codigo no valido -- " + ec.getMessage());
-        } catch (ExcepcionNombreNoValido en){
-            JOptionPane.showMessageDialog(this, "El nombre debe tener 3 caracteres como minimo ");
-            System.out.println("Error de largo de nombre -- " + en.getMessage());
-        } catch (ExcepcionPrecioNoValido ep){
-            JOptionPane.showMessageDialog(this, "El precio debe ser mayor a $1000");
-            System.out.println("Error de rango de precio -- " + ep.getMessage());
-        } catch (NumberFormatException nfe){
-            JOptionPane.showMessageDialog(this, "Precio y Codigo deben ser numéricos");
-            System.out.println("Error de caracter no valido -- " + nfe.getMessage());
-        }
-        
-        
-    }//GEN-LAST:event_jAgregarActionPerformed
-
-    private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
-        
-        try {
-            
-            if(jCodigoM.getText().equals("")){
-                throw new NullPointerException();
-            }
-            
-            if(Integer.parseInt(jCodigoM.getText().trim()) < 10000 || Integer.parseInt(jCodigoM.getText().trim()) >= 100000 ){
-                throw new ExcepcionCodigoNoValido();
-            }
-            
-            if(!Registro.peliculaExiste(Integer.parseInt(jCodigoM.getText().trim()))){
-                throw new ExcepcionPeliculaNoExiste();
-            }
-            
-            Pelicula p = Registro.buscarPelicula(Integer.parseInt(jCodigoM.getText().trim()));
-            
-            jNombreM.setText(p.getNombre());
-            jPrecioM.setText(String.valueOf(p.getPrecio()));
-            jFormatoM.setSelected(p.getFormato4k().equals("S"));
-            jCategoriaM.setSelectedItem(Registro.buscarCategoria(p.getIdCategoria()).getDescripcion());
-        } catch (NullPointerException ne){
-            jNombreM.setText("");
-            jPrecioM.setText("");
-            jFormatoM.setSelected(false);
-            jCategoriaM.setSelectedItem(null);
-            JOptionPane.showMessageDialog(this, "Ingrese codigo a buscar");
-        } catch (NumberFormatException | ExcepcionCodigoNoValido ec){
-            jNombreM.setText("");
-            jPrecioM.setText("");
-            jFormatoM.setSelected(false);
-            jCategoriaM.setSelectedItem(null);
-            JOptionPane.showMessageDialog(this, "El codigo debe poseer 5 digitos");
-            System.out.println("Error de codigo no valido -- " + ec.getMessage());
-        } catch (ExcepcionPeliculaNoExiste epnx){
-            jNombreM.setText("");
-            jPrecioM.setText("");
-            jFormatoM.setSelected(false);
-            jCategoriaM.setSelectedItem(null);
-            JOptionPane.showMessageDialog(this, "Codigo no está registrado");
-        }
-        
-    }//GEN-LAST:event_jBuscarActionPerformed
+    }//GEN-LAST:event_jPanelIngresoMouseClicked
 
     private void jEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarActionPerformed
-        
+
         try {
-            
+
             if(jCodigoE.getText().equals("")){
                 throw new NullPointerException();
             }
-            
+
             if(Integer.parseInt(jCodigoE.getText().trim()) < 10000 || Integer.parseInt(jCodigoE.getText().trim()) >= 100000 ){
                 throw new ExcepcionCodigoNoValido();
             }
-            
+
             if(Registro.eliminarPelicula(Integer.parseInt(jCodigoE.getText().trim()))){
                 JOptionPane.showMessageDialog(this, "Registro eliminado");
             } else {
                 JOptionPane.showMessageDialog(this, "Registro no encontrado. No se pudo eliminar");
             }
             mostrarListado();
-            
+
         } catch (NullPointerException ne){
             JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
             System.out.println("Error de campos vacios -- " + ne.getMessage());
         } catch (ExcepcionCodigoNoValido ec){
             JOptionPane.showMessageDialog(this, "El codigo debe poseer 5 digitos");
             System.out.println("Error de codigo no valido -- " + ec.getMessage());
-        } 
+        }
     }//GEN-LAST:event_jEliminarActionPerformed
 
-    private void jPanelIngresoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelIngresoMouseClicked
-        
-    }//GEN-LAST:event_jPanelIngresoMouseClicked
-
     private void jCategoriaLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCategoriaLActionPerformed
-        
-        
-    }//GEN-LAST:event_jCategoriaLActionPerformed
-
-    private void jListarPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jListarPeliculasActionPerformed
-        
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("CODIGO");
         modelo.addColumn("NOMBRE");
         modelo.addColumn("CATEGORIA");
         modelo.addColumn("PRECIO");
         modelo.addColumn("FORMATO 4K");
-        
+
         jTabla.setModel(modelo);
-        
+
         String cat = jCategoriaL.getSelectedItem().toString();
-        
+
         ArrayList<Pelicula> listado = new ArrayList<>();
-        
+
         if (cat.equals("Todas")){
             mostrarListado();
         } else {
@@ -782,9 +732,7 @@ public class Ventana extends javax.swing.JFrame {
 
             jTabla.setModel(modelo);
         }
-        
-    
-    }//GEN-LAST:event_jListarPeliculasActionPerformed
+    }//GEN-LAST:event_jCategoriaLActionPerformed
 
     private void jLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLimpiarActionPerformed
         jNombre.setText("");
@@ -809,8 +757,313 @@ public class Ventana extends javax.swing.JFrame {
         jPrecioM.setText("Precio superior a 1000");
         jCodigoM.setText("Codigo numerico de 5 digitos");
         jTexto.setText("Escoja Categoria, ej: ACCION // Escoja Formato 4k sí es ALTA DEFINICION");
-        
+
     }//GEN-LAST:event_jAyudaActionPerformed
+
+    private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
+
+        try {
+
+            if(jCodigoM.getText().equals("")){
+                throw new NullPointerException();
+            }
+
+            if(Integer.parseInt(jCodigoM.getText().trim()) < 10000 || Integer.parseInt(jCodigoM.getText().trim()) >= 100000 ){
+                throw new ExcepcionCodigoNoValido();
+            }
+
+            if(!Registro.peliculaExiste(Integer.parseInt(jCodigoM.getText().trim()))){
+                throw new ExcepcionPeliculaNoExiste();
+            }
+
+            Pelicula p = Registro.buscarPelicula(Integer.parseInt(jCodigoM.getText().trim()));
+
+            jNombreM.setText(p.getNombre());
+            jPrecioM.setText(String.valueOf(p.getPrecio()));
+            jFormatoM.setSelected(p.getFormato4k().equals("S"));
+            jCategoriaM.setSelectedItem(Registro.buscarCategoria(p.getIdCategoria()).getDescripcion());
+        } catch (NullPointerException ne){
+            jNombreM.setText("");
+            jPrecioM.setText("");
+            jFormatoM.setSelected(false);
+            jCategoriaM.setSelectedItem(null);
+            JOptionPane.showMessageDialog(this, "Ingrese codigo a buscar");
+        } catch (NumberFormatException | ExcepcionCodigoNoValido ec){
+            jNombreM.setText("");
+            jPrecioM.setText("");
+            jFormatoM.setSelected(false);
+            jCategoriaM.setSelectedItem(null);
+            JOptionPane.showMessageDialog(this, "El codigo debe poseer 5 digitos");
+            System.out.println("Error de codigo no valido -- " + ec.getMessage());
+        } catch (ExcepcionPeliculaNoExiste epnx){
+            jNombreM.setText("");
+            jPrecioM.setText("");
+            jFormatoM.setSelected(false);
+            jCategoriaM.setSelectedItem(null);
+            JOptionPane.showMessageDialog(this, "Codigo no está registrado");
+        }
+
+    }//GEN-LAST:event_jBuscarActionPerformed
+
+    private void jFormatoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormatoMActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormatoMActionPerformed
+
+    private void jModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModificarActionPerformed
+        try {
+
+            jTexto.setText(jCategoriaM.getEditor().getItem().toString());
+
+            if(jCategoriaM.getEditor().getItem().toString() != "" && Registro.buscarCategoria(jCategoriaM.getEditor().getItem().toString()).getId() == 0){
+                throw new ExcepcionCategoriaNoExiste();
+            }
+
+            if(!Registro.peliculaExiste(Integer.parseInt(jCodigoM.getText().trim()))){
+                throw new ExcepcionPeliculaNoExiste();
+            }
+
+            if(Integer.parseInt(jCodigoM.getText().trim()) < 10000 || Integer.parseInt(jCodigoM.getText().trim()) >= 100000 ){
+                throw new ExcepcionCodigoNoValido();
+            }
+
+            if(jCodigoM.getText().equals("") || jNombreM.getText().equals("") || jPrecioM.getText().equals("") ){
+                throw new NullPointerException();
+            }
+
+            if(jNombreM.getText().trim().length() < 3){
+                throw new ExcepcionNombreNoValido();
+            }
+
+            if(Integer.parseInt(jPrecioM.getText().trim()) <= 1000){
+                throw new ExcepcionPrecioNoValido();
+            }
+
+            Pelicula p = new Pelicula();
+
+            Object catcb = jCategoriaM.getSelectedItem();
+
+            p.setCodigo(Integer.parseInt(jCodigoM.getText().trim()));
+            p.setPrecio(Integer.parseInt(jPrecioM.getText().trim()));
+            p.setIdCategoria(Registro.buscarCategoria(catcb.toString()).getId());
+            p.setNombre(jNombreM.getText().trim());
+            if (jFormatoM.isSelected()){
+                p.setFormato4k("S");
+            } else {
+                p.setFormato4k("N");
+            }
+
+            if(Registro.modificarPelicula(p)){
+                JOptionPane.showMessageDialog(this, "Registro modificado con exito");
+                jTexto.setText("Registro modificado exitosamente");
+                mostrarListado();
+            } else {
+                JOptionPane.showMessageDialog(this, "Registro no se ha modificado");
+                jTexto.setText("Registro no se modificó");
+            }
+
+        } catch (ExcepcionCategoriaNoExiste ecnx) {
+            JOptionPane.showMessageDialog(this, "Categoria no existe");
+            System.out.println("Error de categoria no existente -- " + ecnx.getMessage());
+        } catch (ExcepcionPeliculaNoExiste epnx){
+            JOptionPane.showMessageDialog(this, "Pelicula no está registrada");
+        } catch (NullPointerException ne){
+            JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
+            System.out.println("Error de campos vacios -- " + ne.getMessage());
+        } catch (ExcepcionNombreNoValido en){
+            JOptionPane.showMessageDialog(this, "El nombre debe tener 3 caracteres como minimo ");
+            System.out.println("Error de largo de nombre -- " + en.getMessage());
+        } catch (ExcepcionPrecioNoValido ep){
+            JOptionPane.showMessageDialog(this, "El precio debe ser mayor a $1000");
+            System.out.println("Error de rango de precio -- " + ep.getMessage());
+        } catch (ExcepcionCodigoNoValido ec){
+            JOptionPane.showMessageDialog(this, "El codigo debe poseer 5 digitos");
+            System.out.println("Error de codigo no valido -- " + ec.getMessage());
+        } catch (NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this, "Precio y Codigo deben ser numéricos");
+            System.out.println("Error de caracter no valido -- " + nfe.getMessage());
+        }
+    }//GEN-LAST:event_jModificarActionPerformed
+
+    private void jFormatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormatoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormatoActionPerformed
+
+    private void jAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarActionPerformed
+        try {
+
+            if(jCodigo.getText().equals("") || jNombre.getText().equals("") || jPrecio.getText().equals("") ){
+                throw new NullPointerException();
+            }
+
+            if(!Registro.peliculaExiste(Integer.parseInt(jCodigo.getText().trim()))){
+                throw new ExcepcionCodigoExistente();
+            }
+
+            if(Integer.parseInt(jCodigo.getText().trim()) < 10000 || Integer.parseInt(jCodigo.getText().trim()) >= 100000 ){
+                throw new ExcepcionCodigoNoValido();
+            }
+
+            if(jNombre.getText().trim().length() < 3){
+                throw new ExcepcionNombreNoValido();
+            }
+
+            if(Integer.parseInt(jPrecio.getText().trim()) <= 1000){
+                throw new ExcepcionPrecioNoValido();
+            }
+
+            Pelicula p = new Pelicula();
+
+            Object catcb = jCategoria.getSelectedItem();
+
+            p.setCodigo(Integer.parseInt(jCodigo.getText().trim()));
+            p.setPrecio(Integer.parseInt(jPrecio.getText().trim()));
+            p.setIdCategoria(Registro.buscarCategoria(catcb.toString()).getId());
+            p.setNombre(jNombre.getText().trim());
+            if (jFormato.isSelected()){
+                p.setFormato4k("S");
+            } else {
+                p.setFormato4k("N");
+            }
+
+            if(Registro.agregarPelicula(p)){
+                JOptionPane.showMessageDialog(this, "Registro ingresado con exito");
+                jTexto.setText("Registro ingresado exitosamente");
+                mostrarListado();
+            } else {
+                JOptionPane.showMessageDialog(this, "Registro no ingresado");
+                jTexto.setText("Error al ingresar registro");
+            }
+
+        } catch (NullPointerException ne){
+            JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
+            System.out.println("Error de campos vacios -- " + ne.getMessage());
+        } catch(ExcepcionCodigoExistente ex){
+            JOptionPane.showMessageDialog(this, "Ya existe una película asociada al código.");
+            System.out.println("Error de campos vacios -- " + ex.getMessage());
+        } catch (ExcepcionCodigoNoValido ec){
+            JOptionPane.showMessageDialog(this, "El codigo debe:\n - poseer 5 digitos.\n - no comenzar con 0 (cero)");
+            System.out.println("Error de codigo no valido -- " + ec.getMessage());
+        } catch (ExcepcionNombreNoValido en){
+            JOptionPane.showMessageDialog(this, "El nombre debe tener 3 caracteres como minimo ");
+            System.out.println("Error de largo de nombre -- " + en.getMessage());
+        } catch (ExcepcionPrecioNoValido ep){
+            JOptionPane.showMessageDialog(this, "El precio debe ser mayor a $1000");
+            System.out.println("Error de rango de precio -- " + ep.getMessage());
+        } catch (NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this, "Precio y Codigo deben ser numéricos");
+            System.out.println("Error de caracter no valido -- " + nfe.getMessage());
+        }
+
+    }//GEN-LAST:event_jAgregarActionPerformed
+
+    private void jTextoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextoBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextoBuscarActionPerformed
+
+    private void jBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarNombreActionPerformed
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("CODIGO");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("CATEGORIA");
+        modelo.addColumn("PRECIO");
+        modelo.addColumn("FORMATO 4K");
+
+        jTabla.setModel(modelo);
+
+        String cat = jCategoriaL.getSelectedItem().toString();
+
+        ArrayList<Pelicula> listado = new ArrayList<>();
+
+        if (jTextoBuscar.getText().equals("")){
+            mostrarListado();
+        } else {
+            listado = Registro.buscarPelicula(jTextoBuscar.getText());
+            String[] entrada = new String[5];
+
+            for(Pelicula p : listado) {
+                entrada[0] = String.valueOf(p.getCodigo());
+                entrada[1] = p.getNombre();
+                entrada[2] = Registro.buscarCategoria(p.getIdCategoria()).getDescripcion();
+                entrada[3] = String.valueOf(p.getPrecio());
+                entrada[4] = p.getFormato4k();
+
+                modelo.addRow(entrada);
+            }
+
+            jTabla.setModel(modelo);
+        }
+    }//GEN-LAST:event_jBuscarNombreActionPerformed
+
+    private void jAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAgregarCategoriaActionPerformed
+        try {
+
+            if(jId.getText().equals("") || jDescripcion.getText().equals("")){
+                throw new NullPointerException();
+            }
+
+            if(Registro.categoriaExiste(Integer.parseInt(jId.getText().trim()))){
+                throw new ExcepcionCodigoExistente();
+            }
+
+            if(Integer.parseInt(jId.getText().trim()) < 100 || Integer.parseInt(jId.getText().trim()) >= 1000 ){
+                throw new ExcepcionCodigoNoValido();
+            }
+
+            if(jDescripcion.getText().trim().length() < 3){
+                throw new ExcepcionNombreNoValido();
+            }
+
+            Categoria cat = new Categoria();
+
+            cat.setId(Integer.parseInt(jId.getText().trim()));
+            cat.setDescripcion(jDescripcion.getText().trim());
+            
+            if(Registro.agregarCategoria(cat)){
+                JOptionPane.showMessageDialog(this, "Categoria ingresada con exito");
+                listarCategoria();
+            } else {
+                JOptionPane.showMessageDialog(this, "Registro no ingresado");
+                listarCategoria();
+            }
+            
+
+        } catch (NullPointerException ne){
+            JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
+            System.out.println("Error de campos vacios -- " + ne.getMessage());
+        } catch(ExcepcionCodigoExistente ex){
+            JOptionPane.showMessageDialog(this, "Ya existe una categoria con ese Id.");
+            System.out.println("Error de campos vacios -- " + ex.getMessage());
+        } catch (ExcepcionCodigoNoValido ec){
+            JOptionPane.showMessageDialog(this, "El id debe estar entre 100 y 999");
+            System.out.println("Error de id no valido -- " + ec.getMessage());
+        } catch (ExcepcionNombreNoValido en){
+            JOptionPane.showMessageDialog(this, "La descripcion debe tener 3 caracteres como minimo ");
+            System.out.println("Error de largo de descripcion -- " + en.getMessage());
+        } catch (NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this, "ID debe ser numérico");
+            System.out.println("Error de caracter no valido -- " + nfe.getMessage());
+        }
+    }//GEN-LAST:event_jAgregarCategoriaActionPerformed
+
+    private void jEliminarCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarCatActionPerformed
+        try {
+            
+            if(jTablaCat.getValueAt(jTablaCat.getSelectedRow(), jTablaCat.getSelectedColumn()).toString().equals("")){
+                throw new NullPointerException();
+            }
+
+            if(Registro.eliminarCategoria(Integer.parseInt(jTablaCat.getValueAt(jTablaCat.getSelectedRow(), 0).toString()))){
+                JOptionPane.showMessageDialog(this, "Registro eliminado");
+            } else {
+                JOptionPane.showMessageDialog(this, "Registro no encontrado. No se pudo eliminar");
+            }
+            listarCategoria();
+
+        } catch (NullPointerException ne){
+            JOptionPane.showMessageDialog(this, "Debes rellenar todos los campos");
+            System.out.println("Error de campos vacios -- " + ne.getMessage());
+        }
+    }//GEN-LAST:event_jEliminarCatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -839,40 +1092,46 @@ public class Ventana extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form 
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Ventana().setVisible(true);
             }
             
         });
-        */
         
-        System.out.println("peliculas");
-        ArrayList<Pelicula> lp = Registro.buscarPelicula("PRUEBA");
-        System.out.println(lp);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAgregar;
+    private javax.swing.JButton jAgregarCategoria;
     private javax.swing.JButton jAyuda;
     private javax.swing.JButton jBuscar;
+    private javax.swing.JButton jBuscarNombre;
     private javax.swing.JComboBox<String> jCategoria;
     private javax.swing.JComboBox<String> jCategoriaL;
     private javax.swing.JComboBox<String> jCategoriaM;
     private javax.swing.JTextField jCodigo;
     private javax.swing.JTextField jCodigoE;
     private javax.swing.JTextField jCodigoM;
+    private javax.swing.JTextField jDescripcion;
     private javax.swing.JButton jEliminar;
+    private javax.swing.JMenuItem jEliminarCat;
     private javax.swing.JCheckBox jFormato;
     private javax.swing.JCheckBox jFormatoM;
+    private javax.swing.JTextField jId;
     private javax.swing.JPanel jIngresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -883,7 +1142,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JButton jLimpiar;
     private javax.swing.JPanel jListar;
-    private javax.swing.JButton jListarPeliculas;
     private javax.swing.JMenuBar jMenu;
     private javax.swing.JButton jModificar;
     private javax.swing.JTextField jNombre;
@@ -891,13 +1149,19 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenu jOpciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jPanelIngreso;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JTextField jPrecio;
     private javax.swing.JTextField jPrecioM;
     private javax.swing.JMenuItem jSalir;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTabla;
+    private javax.swing.JTable jTablaCat;
     private javax.swing.JTextField jTexto;
+    private javax.swing.JTextField jTextoBuscar;
     // End of variables declaration//GEN-END:variables
 }

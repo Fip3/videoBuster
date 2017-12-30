@@ -316,12 +316,10 @@ public class Registro {
             cc.conectar();
             Connection cn = cc.getConnection();
             
-            String consulta = "SELECT id FROM CATEGORIA WHERE id=" + id + "'";
+            String consulta = "SELECT id FROM CATEGORIA WHERE id=" + id ;
             PreparedStatement ps = cn.prepareStatement(consulta);
             
             ResultSet rs = ps.executeQuery();
-            
-            cc.cerrar();
             
             return rs.next();
         
@@ -343,6 +341,34 @@ public class Registro {
             Connection cn = cc.getConnection();
             
             String consulta = "SELECT * FROM CATEGORIA ORDER BY descripcion";
+            PreparedStatement ps = cn.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                c = new Categoria();
+                c.setId(rs.getInt("id"));
+                c.setDescripcion(rs.getString("descripcion"));
+                listadoCategorias.add(c);
+            }
+            
+        } catch (SQLException se) {
+            System.out.println("ErrorSQL al listar categoria -- " + se.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error al listar categoria -- " + e.getMessage());
+        }
+        
+        return listadoCategorias;
+    }
+    
+    public static ArrayList<Categoria> listarCategoriaId(){
+        ArrayList<Categoria> listadoCategorias = new ArrayList<>();
+        Categoria c;
+        try {
+            Conexion cc = new Conexion();
+            cc.conectar();
+            Connection cn = cc.getConnection();
+            
+            String consulta = "SELECT * FROM CATEGORIA ORDER BY id";
             PreparedStatement ps = cn.prepareStatement(consulta);
             ResultSet rs = ps.executeQuery();
             

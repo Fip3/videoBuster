@@ -6,6 +6,9 @@
 package controlador;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import modelo.Categoria;
 import modelo.Pelicula;
 import org.junit.After;
@@ -55,8 +58,9 @@ public class RegistroIT {
         System.out.println("agregarPelicula");
         Pelicula p = new Pelicula();
         int codPrueba = Math.round((float)(Math.random()*90000))+10000;
+        int idCat = Math.round((float)(Math.random()*14))+101;
         p.setCodigo(codPrueba);
-        p.setIdCategoria(105);
+        p.setIdCategoria(idCat);
         p.setNombre("PELICULA PRUEBA " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
         p.setFormato4k("S");
         p.setPrecio(Math.round((float)(Math.random()*9000 + 1000)));
@@ -76,7 +80,7 @@ public class RegistroIT {
     public void testAgregarCategoria() {
         System.out.println("agregarCategoria");
         Categoria cat = new Categoria();
-        int idPrueba = Math.round((float)(Math.random()*900))+100;
+        int idPrueba = Math.round((float)(Math.random()*800))+200;
         cat.setId(idPrueba);
         cat.setDescripcion("CATEGORIA PRUEBA " + String.valueOf(Double.hashCode(Math.random())).substring(1,4));
         boolean expResult = true;
@@ -98,7 +102,7 @@ public class RegistroIT {
         
         System.out.println("buscarPelicula");
         String cadena;
-        cadena = String.valueOf(Double.hashCode(Math.random())).substring(2,4);
+        cadena = String.valueOf(Double.hashCode(Math.random())).substring(1,5);
         
         ArrayList<Pelicula> lp = new ArrayList<>();
         
@@ -108,7 +112,7 @@ public class RegistroIT {
             p.setCodigo(codPrueba);
             p.setIdCategoria(Math.round((float)(Math.random()*10))+101);
             p.setNombre("PELICULA PRUEBA "+ cadena + " " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
-            p.setFormato4k("S");
+            if (Math.random() < 0.5 ){ p.setFormato4k("S"); } else { p.setFormato4k("N"); }
             p.setPrecio(Math.round((float)(Math.random()*9000 + 1000)));
             lp.add(p);
         }
@@ -143,6 +147,7 @@ public class RegistroIT {
         
         System.out.println("buscarPeliculaPorCategoria");
         String cadena = "FICCION";
+        String ad = String.valueOf(Double.hashCode(Math.random())).substring(1,5);
         
         ArrayList<Pelicula> lp = new ArrayList<>();
         
@@ -151,7 +156,7 @@ public class RegistroIT {
             int codPrueba = Math.round((float)(Math.random()*90000))+10000;
             p.setCodigo(codPrueba);
             p.setIdCategoria(104);
-            p.setNombre("PELICULA PRUEBA " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
+            p.setNombre("PELICULA PRUEBA " + ad + " " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
             p.setFormato4k("S");
             p.setPrecio(Math.round((float)(Math.random()*9000 + 1000)));
             lp.add(p);
@@ -162,6 +167,7 @@ public class RegistroIT {
            Registro.agregarPelicula(p);
         }
         ArrayList<Pelicula> expResult = lp;
+                
         ArrayList<Pelicula> result = Registro.buscarPeliculaPorCategoria(cadena);
         
         assertEquals(expResult, result);
