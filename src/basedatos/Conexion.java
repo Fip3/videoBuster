@@ -13,13 +13,13 @@ import oracle.jdbc.driver.OracleDriver;
  * @author felip
  */
 public class Conexion {
-    private final String USUARIO = "usuario07";
+    private final String USUARIO = "felipe";
     //Contraseña del usuario de la bd
-    private final String PASS = "usuario07";
+    private final String PASS = "N4n3rmosa";
     //SID de la bd, este lo registramos en la instalacion
     private final String SID = "XE";
     //Host donde se encuentra la bd
-    private final String HOST = "pvd-am-01-07.aws.smartcloud.cl";
+    private final String HOST = "localhost";
     //puerto 1521 es el estandar para este tipo de instalaciones
     private final int PUERTO = 1521;
     //Objeto donde se almacenará la conexión

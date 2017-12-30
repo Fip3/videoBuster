@@ -152,6 +152,7 @@ public class Registro {
                 p.setIdCategoria(rs.getInt("id_categoria"));
                 p.setFormato4k(rs.getString("formato4k"));
                 p.setNombre(rs.getString("nombre"));
+                lp.add(p);
             }
             cc.cerrar();
         } catch (SQLException se) {
@@ -176,7 +177,7 @@ public class Registro {
             cc.conectar();
             Connection cn = cc.getConnection();
             
-            String consulta = "SELECT * FROM PELICULA WHERE id_categoria=" + id_cat + "ORDER BY codigo ";
+            String consulta = "SELECT * FROM PELICULA WHERE id_categoria=" + id_cat;
             Statement stm = cn.createStatement();
             
             ResultSet rs = stm.executeQuery(consulta);

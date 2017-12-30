@@ -18,6 +18,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import modelo.*;
 import java.util.ArrayList;
+
 /**
  *
  * @author Duoc UC
@@ -838,12 +839,18 @@ public class Ventana extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Ventana().setVisible(true);
             }
+            
         });
+        */
+        
+        System.out.println("peliculas");
+        ArrayList<Pelicula> lp = Registro.buscarPelicula("PRUEBA");
+        System.out.println(lp);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

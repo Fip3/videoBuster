@@ -70,19 +70,29 @@ public class Pelicula {
     }
 
     @Override
+    public String toString() {
+        return "Pelicula{" + "codigo=" + codigo + ", precio=" + precio + ", idCategoria=" + idCategoria + '}';
+    }
+    
+    
+
+    @Override
     public int hashCode() {
-        int hash = Double.hashCode(Math.random());
+        int hash = 7; //Double.hashCode(Math.random());
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
+        
         if (this == obj) {
             return true;
         }
+        
         if (obj == null) {
             return false;
         }
+        
         if (getClass() != obj.getClass()) {
             return false;
         }
@@ -99,10 +109,7 @@ public class Pelicula {
         if (!Objects.equals(this.formato4k, other.formato4k)) {
             return false;
         }
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.nombre, other.nombre);
     }
     
     

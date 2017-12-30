@@ -65,6 +65,7 @@ public class RegistroIT {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+        System.out.println("Eliminando " + p.toString());
         Registro.eliminarPelicula(codPrueba);
     }
     
@@ -83,6 +84,7 @@ public class RegistroIT {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+        System.out.println("Eliminando " + cat.toString());
         Registro.eliminarCategoria(idPrueba);
     }
 
@@ -95,7 +97,8 @@ public class RegistroIT {
     public void testBuscarPelicula_String() {
         
         System.out.println("buscarPelicula");
-        String cadena = "PRUEBA";
+        String cadena;
+        cadena = String.valueOf(Double.hashCode(Math.random())).substring(2,4);
         
         ArrayList<Pelicula> lp = new ArrayList<>();
         
@@ -103,24 +106,30 @@ public class RegistroIT {
             Pelicula p = new Pelicula();
             int codPrueba = Math.round((float)(Math.random()*90000))+10000;
             p.setCodigo(codPrueba);
-            p.setIdCategoria(Math.round((float)(Math.random()*10))+100);
-            p.setNombre("PELICULA PRUEBA " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
+            p.setIdCategoria(Math.round((float)(Math.random()*10))+101);
+            p.setNombre("PELICULA PRUEBA "+ cadena + " " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
             p.setFormato4k("S");
             p.setPrecio(Math.round((float)(Math.random()*9000 + 1000)));
             lp.add(p);
         }
         
         for (Pelicula p: lp){
+           System.out.println("Agregando " + p.toString());
            Registro.agregarPelicula(p);
+           
         }
+        System.out.println("Comparando elementos");
         
         ArrayList<Pelicula> expResult = lp;
         ArrayList<Pelicula> result = Registro.buscarPelicula(cadena);
         assertEquals(expResult, result);
+        
+        System.out.println("Comparacion exitosa");
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
         
         for (Pelicula p: lp){
+           System.out.println("Eliminando " + p.toString());
            Registro.eliminarPelicula(p.getCodigo());
         }
     }
@@ -131,6 +140,7 @@ public class RegistroIT {
     @Test
     
     public void testBuscarPeliculaPorCategoria_String() {
+        
         System.out.println("buscarPeliculaPorCategoria");
         String cadena = "FICCION";
         
@@ -148,13 +158,20 @@ public class RegistroIT {
         }
         
         for (Pelicula p: lp){
+           System.out.println("Agregando " + p.toString());
            Registro.agregarPelicula(p);
         }
         ArrayList<Pelicula> expResult = lp;
         ArrayList<Pelicula> result = Registro.buscarPeliculaPorCategoria(cadena);
+        
         assertEquals(expResult, result);
+        
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+        for (Pelicula p: lp){
+           System.out.println("Eliminando " + p.toString());
+           Registro.eliminarPelicula(p.getCodigo());
+        }
     }    
     
     /**
@@ -168,7 +185,7 @@ public class RegistroIT {
         Pelicula p = new Pelicula();
         int codPrueba = Math.round((float)(Math.random()*90000))+10000;
         p.setCodigo(codPrueba);
-        p.setIdCategoria(105);
+        p.setIdCategoria(110);
         p.setNombre("PELICULA PRUEBA " + String.valueOf(Double.hashCode(Math.random())).substring(2,7));
         p.setFormato4k("S");
         p.setPrecio(Math.round((float)(Math.random()*9000 + 1000)));
@@ -182,6 +199,8 @@ public class RegistroIT {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+        System.out.println("Eliminando " + p.toString());
+        Registro.eliminarPelicula(codPrueba);
     }
 
     /**
